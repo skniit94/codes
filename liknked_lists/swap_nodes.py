@@ -56,6 +56,9 @@ def swap(head, x, y):
 
     return head1
 
+
+
+
 def print_ll(head):
     while head:
         print (head.data, end = ' ')
@@ -75,3 +78,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
