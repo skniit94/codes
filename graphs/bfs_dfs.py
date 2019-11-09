@@ -1,58 +1,115 @@
 class Vertex(object):
 
-    def __init__(self, data):
-        self.data = data
-        self.adj = []
+    def __init__(self, id):
+        self.id = id
+        self.adj = []  # will contain tuples (Vertex, Weight)
 
 
-def dfs(root):
+class Edge(object):
+
+    def __init__(self, v1, v2, w):
+        self.v1 = v1
+        self.v2 = v2
+        self.w = w
+
+
+class Graph(object):
+
+    def __init__(self):
+
+        self.vertices = []
+        self.edges = []
+
+    def add_vertex(self, v):
+        if v not in self.vertices:
+            self.vertices.append(v)
+
+    def add_edge(self, v1, v2, w):
+
+        self.edges.append(Edge(v1, v2, w))
+
+        if v1 not in self.vertices:
+            self.vertices.append(v1)
+
+        if v2 not in self.vertices:
+            self.vertices.append(v2)
+
+        v1.adj.append((v2, w))
+        v2.adj.append((v1, w))
+
+
+def dfs(g):
+
     visited = set()
-    st = list()
-    st.append(root)
-    while st:
-        curr = st.pop()
-        if curr in visited:
+    st = []
+
+    for v in g.vertices:
+
+        if v in visited:
             continue
-        visited.add(curr)
-        print (curr.data, end = ' ')
-        for adj in curr.adj:
-            st.append(adj)
-    print()
+        st.append(v)
+        visited.add(v)
+        while st:
+            curr = st.pop()
+            print (curr.id)
+            for tup in curr.adj:
+                adj = tup[0]
+                if adj in visited:
+                    continue
+                st.append(adj)
+                visited.add(adj)
 
 
-def bfs(root):
+def bfs(g):
+
     visited = set()
-    q = list()
-    q.append(root)
-    while q:
-        curr = q.pop(0)
-        if curr in visited:
+    q = []
+
+    for v in g.vertices:
+
+        if v in visited:
             continue
-        visited.add(curr)
-        print (curr.data, end = ' ')
-        for adj in curr.adj:
-            q.append(adj)
-    print()
+        q.append(v)
+        visited.add(v)
+        while q:
+            curr = q.pop(0)
+            print (curr.id)
+            for tup in curr.adj:
+                adj = tup[0]
+                if adj in visited:
+                    continue
+                q.append(adj)
+                visited.add(adj)
 
 
 def main():
-    v1 = Vertex(1)
-    v2 = Vertex(2)
-    v3 = Vertex(3)
-    v4 = Vertex(4)
-    v5 = Vertex(5)
-    v6 = Vertex(6)
 
-    v1.adj = [v2]
-    v2.adj = [v3, v4]
-    v3.adj = [v4, v6]
-    v4.adj = [v5]
-    v5.adj = [v2]
-    v6.adj = [v4]
+    a = Vertex('a')
+    b = Vertex('b')
+    c = Vertex('c')
+    d = Vertex('d')
+    e = Vertex('e')
+    f = Vertex('f')
+    g = Vertex('g')
+    h = Vertex('h')
+    i = Vertex('i')
 
-    bfs(v1)
-    dfs(v1)
+    Gr = Graph()
+
+    Gr.add_edge(a, b, 2)
+    Gr.add_edge(b, c, 3)
+    Gr.add_edge(b, d, 1)
+    Gr.add_edge(c, d, 7)
+    Gr.add_edge(d, e, 4)
+    Gr.add_edge(e, f, 6)
+    Gr.add_edge(f, g, 9)
+    Gr.add_edge(f, h, 5)
+
+    Gr.add_vertex(i)
+
+    dfs(Gr)
+    bfs(Gr)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
