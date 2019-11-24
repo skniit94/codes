@@ -28,11 +28,9 @@ class Graph(object):
 
         self.edges.append(Edge(v1, v2, w))
 
-        if v1 not in self.vertices:
-            self.vertices.append(v1)
+        self.add_vertex(v1)
 
-        if v2 not in self.vertices:
-            self.vertices.append(v2)
+        self.add_vertex(v2)
 
         v1.adj.append((v2, w))
         v2.adj.append((v1, w))
@@ -109,6 +107,8 @@ def main():
 
     dfs(Gr)
     bfs(Gr)
+
+
 
 
 if __name__ == "__main__":
