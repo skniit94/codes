@@ -1,3 +1,4 @@
+
 def find_perm(s):
     s = list(s)
     if len(s) == 1:
@@ -12,3 +13,4 @@ def find_perm(s):
 
 if __name__ == "__main__":
     print(find_perm('abcd'))
+
